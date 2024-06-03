@@ -1,5 +1,5 @@
 output "vault_public_endpoint" {
-  value = hcp_vault_cluster.hashistack.vault_public_endpoint_url
+  value = hcp_vault_cluster.vault_cluster.vault_public_endpoint_url
 }
 
 output "vault_root_token" {
@@ -8,7 +8,7 @@ output "vault_root_token" {
 }
 
 output "vault_cluster_id" {
-  value = hcp_vault_cluster.hashistack.cluster_id
+  value = hcp_vault_cluster.vault_cluster.cluster_id
 }
 
 # Passthrough outputs to enable cascading plans
