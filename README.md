@@ -1,6 +1,6 @@
 # Multi Product Integration Demo
 
-## Overview 
+## Overview
 
 This repository is intended to help members of WWTFO quickly create reproducible demo environments which showcase:
 - HCP Vault
@@ -20,12 +20,12 @@ The following integrations are highlighted by default:
   - Dynamic MongoDB credentials injection via **Nomad** templates
 - **Packer** is used to create **Nomad** Server and Client AMIs in AWS
 - **Terraform** integrates with **HCP Packer** for AMI management
-- **Consul** service registration via **Nomad** 
+- **Consul** service registration via **Nomad**
 - **Consul** Connect (service mesh) used by **Nomad** jobs
 
 ## Repository Structure
 
-The entire environment is orchestrated by the "control-workspace" directory.  After completing a few prerequesite manual operations (which we will discuss below in the "Prerequisites" section), you will plan/apply the "control-workspace" in TFC.  This workspace will orchestrate the creation and triggering of all downstream workspaces (Shout out to @lucymhdavies for the multi-space idea!).  
+The entire environment is orchestrated by the "control-workspace" directory.  After completing a few prerequesite manual operations (which we will discuss below in the "Prerequisites" section), you will plan/apply the "control-workspace" in TFC.  This workspace will orchestrate the creation and triggering of all downstream workspaces (Shout out to @lucymhdavies for the multi-space idea!).
 - **control-workspace**:  Orchestrates all other workspaces
 - **networking**: Creates a VPC in AWS with 3 subnets, an HVN in HCP, and the peering connection between the two
 - **hcp-clusters**: Creates an HCP Vault cluster, an HCP Boundary cluster, an HCP Consul cluster within the HVN
@@ -68,7 +68,7 @@ terraform init
 ```
 terraform plan -var "tfc_organization=something" -var "region=aws_region"
 ```
-5) Assuming everything looks good, run an apply passing in your TFC account name and AWS region 
+5) Assuming everything looks good, run an apply passing in your TFC account name and AWS region
 ```
 terraform apply -var "tfc_organization=something" -var "region=aws_region"
 ```
@@ -86,7 +86,7 @@ terraform apply -var "tfc_organization=something" -var "region=aws_region"
 |my_email|\<your email\>|no|terraform|
 |nomad_license|\<your nomad ent license\>|yes|terraform|
 |region|\<the region which will be used on HCP and AWS\>|no|terraform|
-|stack_id|\<will be used to consistently name resources - 3-36 characters.  Can only contain letters, numbers and hyphens\>|no|terraform|
+|resource_prefix|\<will be used to consistently name resources - 3-36 characters.  Can only contain letters, numbers and hyphens\>|no|terraform|
 |tfc_organization|\<your TFC account name\>|no|terraform|
 |HCP_CLIENT_ID|\<HCP Service Principal Client ID\>|no|env|
 |HCP_CLIENT_SECRET|\<HCP Service Principal Client Secret\>|yes|env|
@@ -119,7 +119,7 @@ export AWS_SESSION_TOKEN=************************
 ```
 3) export your HCP_CLIENT_ID, HCP_CLIENT_SECRET, and HCP_PROJECT_ID to your shell
 ```
-export HCP_CLIENT_ID=************************                                    
+export HCP_CLIENT_ID=************************
 export HCP_CLIENT_SECRET=************************
 export HCP_PROJECT_ID=************************
 ```
@@ -130,7 +130,7 @@ packer build -var "subnet_id=subnet-xxxxxxxxxxxx" -var "region=xxxxx" ubuntu.pkr
 
 ## Triggering the deployment
 
-Now comes the easy part, simply trigger a run on "0_control-workspace" and watch the environment unfold! 
+Now comes the easy part, simply trigger a run on "0_control-workspace" and watch the environment unfold!
 
 Once the run is complete, you can access each tool by:
 - **HCP Consul**: Navigate to the cluster in HCP and generate an admin token
@@ -151,7 +151,7 @@ To demonstrate the full stack and all the pre-configured integrations, we've cre
 3) Select your Github Connection
 4) Select your forked repository "terraform-nomad-workload"
 5) Select "Branch" based, then branch = "main" and version = "1.0.0"
-6) Select "Add Module to no-code provision allowlist" 
+6) Select "Add Module to no-code provision allowlist"
 7) Publish
 8) [OPTIONAL] Once the module has been published, go to "Configure Settings" and click "Edit Versions and Variable Settings":
 - tfc_organization: your tfc org name
@@ -164,11 +164,11 @@ To demonstrate the full stack and all the pre-configured integrations, we've cre
 - frontend_app_image: "huggingface/mongoku:1.3.0"
 - mongodb_image: "mongo:5"
 - region: the region you deployed the HashiStack to
-- stack_id: name your demo app> (I typically use something like "app001-dev")
+- resource_prefix: name your demo app> (I typically use something like "app001-dev")
 - tfc_organization: your tfc org name
 10) Click "Next: Workspace Settings"
 11) Provide the workspace settings:
-- Workspace name: Name the workspace (I typically use the stack_id I used above, "app001-dev")
+- Workspace name: Name the workspace (I typically use the resource_prefix I used above, "app001-dev")
 - Project: must be the same project the HashiStack was deployed to (e.g. "HashiStack")
 - Click "Create Workspace"
 ![](https://github.com/djschnei21/multi-product-integration-demo/blob/main/plan.png?raw=true)

@@ -35,8 +35,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-doormat-prereqs/.terraform
-doormat-prereqs/.terraform.lock.hcl
-doormat-prereqs/terraform.tfstate
-doormat-prereqs/terraform.tfstate.backup
+**/.terraform
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
 .DS_Store

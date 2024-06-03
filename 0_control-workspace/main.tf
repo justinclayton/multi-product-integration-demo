@@ -1,7 +1,7 @@
 ### WORKSPACES ###
 
 resource "tfe_workspace" "workspaces" {
-  for_each = var.tfc_workspace_names
+  for_each = var.tfc_workspace_names # <-- update this variable to include additional workspaces
   name         = each.key
   organization = var.tfc_organization
   project_id   = var.tfc_project_id
@@ -17,40 +17,6 @@ resource "tfe_workspace" "workspaces" {
   assessments_enabled = false
   global_remote_state = true
 }
-
-# resource "tfe_workspace" "ddr_base_networking" {
-#   name         = "ddr_base_networking"
-#   organization = var.tfc_organization
-#   project_id   = var.tfc_project_id
-
-#   vcs_repo {
-#     identifier     = var.repo_identifier
-#     oauth_token_id = var.oauth_token_id
-#     branch         = var.repo_branch
-#   }
-
-#   working_directory   = "workspaces/ddr_base_networking"
-#   queue_all_runs      = false
-#   assessments_enabled = false
-#   global_remote_state = true
-# }
-
-# resource "tfe_workspace" "ddr_base_vault" {
-#   name         = "ddr_base_vault"
-#   organization = var.tfc_organization
-#   project_id   = var.tfc_project_id
-
-#   vcs_repo {
-#     identifier     = var.repo_identifier
-#     oauth_token_id = var.oauth_token_id
-#     branch         = var.repo_branch
-#   }
-
-#   working_directory   = "workspaces/ddr_base_vault"
-#   queue_all_runs      = false
-#   assessments_enabled = false
-#   global_remote_state = true
-# }
 
 ### RUN ORDER ###
 

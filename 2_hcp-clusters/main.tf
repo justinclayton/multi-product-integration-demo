@@ -21,14 +21,14 @@ data "terraform_remote_state" "networking" {
 }
 
 resource "hcp_vault_cluster" "hashistack" {
-  cluster_id      = "${var.stack_id}-vault-cluster"
+  cluster_id      = "${var.resource_prefix}-vault-cluster"
   hvn_id          = data.terraform_remote_state.networking.outputs.hvn_id
   tier            = var.vault_cluster_tier
   public_endpoint = true
 }
 
 resource "hcp_consul_cluster" "hashistack" {
-  cluster_id      = "${var.stack_id}-consul-cluster"
+  cluster_id      = "${var.resource_prefix}-consul-cluster"
   hvn_id          = data.terraform_remote_state.networking.outputs.hvn_id
   tier            = var.consul_cluster_tier
   public_endpoint = true
@@ -36,7 +36,7 @@ resource "hcp_consul_cluster" "hashistack" {
 }
 
 resource "hcp_boundary_cluster" "hashistack" {
-  cluster_id = "${var.stack_id}-boundary-cluster"
+  cluster_id = "${var.resource_prefix}-boundary-cluster"
   tier       = var.boundary_cluster_tier
   username   = var.boundary_admin_username
   password   = var.boundary_admin_password

@@ -18,6 +18,6 @@ variable "region" {
   type = string
 }
 
-variable "stack_id" {
+variable "resource_prefix" {
   type = string
 }

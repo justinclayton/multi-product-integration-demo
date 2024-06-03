@@ -6,7 +6,7 @@ variable "aws_account_id" {
   type = string
 }
 
-variable "stack_id" {
+variable "resource_prefix" {
   type        = string
   description = "The name of your stack"
 }

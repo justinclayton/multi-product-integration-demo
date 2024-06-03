@@ -7,3 +7,8 @@ variable "region" {
   type        = string
   description = "The region in which to create resources."
 }
+
+# variable "workspace_name" {
+#   type = string
+#   description = "The name of the Terraform Cloud workspace running this code"
+# }
