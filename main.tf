@@ -12,6 +12,9 @@ resource "tfe_workspace" "workspaces" {
     branch         = var.repo_branch
   }
 
+  # Setting `trigger_prefixes` to an empty list disables "automatic run triggering". Now pushes to VCS will not trigger runs.
+  trigger_prefixes = []
+
   working_directory   = "workspaces/${each.key}"
   queue_all_runs      = false
   assessments_enabled = false
