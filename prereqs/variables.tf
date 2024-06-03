@@ -4,13 +4,17 @@
 
 variable "tfc_workspace_names" {
   type    = set(string)
-  default = ["ddr_base_networking", "ddr_base_vault"]
+  default = ["ddr_base_networking", "ddr_base_vault_cluster, ddr_base_vault_config"]
 }
 
 # variable "region" {
 #   type = string
 # }
 
-variable "variable_set" {
+variable "varset_tf_vars" {
+  type = map(string)
+}
+
+variable "varset_env_vars" {
   type = map(string)
 }

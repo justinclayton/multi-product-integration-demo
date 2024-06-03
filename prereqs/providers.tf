@@ -1,8 +1,8 @@
 provider "aws" {
-  region = var.variable_set["region"]
+  region = var.varset_tf_vars["region"]
 }
 
 provider "tfe" {
   hostname     = "app.terraform.io"
-  organization = var.variable_set["tfc_organization"]
+  organization = var.varset_tf_vars["tfc_organization"]
 }

@@ -34,8 +34,8 @@
 # TFE_ORGANIZATION = "justin-clayton-sandbox"
 
 data "tfe_project" "project" {
-  name         = var.variable_set["tfc_project_name"]
-  organization = var.variable_set["tfc_organization"]
+  name         = var.varset_tf_vars["tfc_project_name"]
+  organization = var.varset_tf_vars["tfc_organization"]
 }
 
 resource "tfe_variable_set" "prereqs" {
@@ -51,12 +51,22 @@ resource "tfe_project_variable_set" "prereqs" {
   # project_id      = var.variable_set["tfc_project_id"]
 }
 
-# create variables within the variable set
-resource "tfe_variable" "tfc_vault_provider_auth" {
-  for_each = var.variable_set
+# create terraform variables within the variable set
+resource "tfe_variable" "prereqs_terraform" {
+  for_each = var.varset_tf_vars
 
   variable_set_id = tfe_variable_set.prereqs.id
   key             = each.key
   value           = each.value
   category        = "terraform"
+}
+
+# create env variables within the variable set
+resource "tfe_variable" "prereqs_env" {
+  for_each = var.varset_env_vars
+
+  variable_set_id = tfe_variable_set.prereqs.id
+  key             = each.key
+  value           = each.value
+  category        = "env"
 }

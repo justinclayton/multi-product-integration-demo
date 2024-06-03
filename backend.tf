@@ -3,7 +3,7 @@ terraform {
     organization = "justin-clayton-sandbox"
 
     workspaces {
-      name = "jc-0_control-workspace"
+      name = "ddr_base"
       project = "justin-clayton"
     }
   }

@@ -37,9 +37,28 @@ resource "tfe_workspace_run" "ddr_base_networking" {
   }
 }
 
-resource "tfe_workspace_run" "ddr_base_vault" {
+resource "tfe_workspace_run" "ddr_base_vault_cluster" {
+  # count = var.enable_vault ? 1 : 0
   depends_on   = [ tfe_workspace_run.ddr_base_networking ]
-  workspace_id = tfe_workspace.workspaces["ddr_base_vault"].id
+  workspace_id = tfe_workspace.workspaces["ddr_base_vault_cluster"].id
+
+  apply {
+    manual_confirm    = false
+    wait_for_run      = true
+    retry_attempts    = 5
+    retry_backoff_min = 5
+  }
+  destroy {
+    manual_confirm    = false
+    wait_for_run      = true
+    retry_attempts    = 5
+    retry_backoff_min = 5
+  }
+}
+
+resource "tfe_workspace_run" "ddr_base_vault_config" {
+  depends_on   = [ tfe_workspace_run.ddr_base_vault_cluster ]
+  workspace_id = tfe_workspace.workspaces["ddr_base_vault_config"].id
 
   apply {
     manual_confirm    = false

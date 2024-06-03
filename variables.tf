@@ -1,6 +1,6 @@
 variable "tfc_workspace_names" {
   type    = set(string) # technically a set, so we can use a for_each loop later
-  default = ["ddr_base_networking", "ddr_base_vault"] # <-- update this variable to include additional workspaces
+  default = ["ddr_base_networking", "ddr_base_vault_cluster", "ddr_base_vault_config"] # <-- update this variable to include additional workspaces
 }
 
 variable "tfc_organization" {
