@@ -12,12 +12,11 @@ provider "aws" {
 
 variable "tfc_organization" {
   type    = string
-  default = ""
 }
 
 variable "tfc_workspace_names" {
   type    = set(string)
-  default = ["1_networking", "5_nomad-cluster", "4_boundary-config", "6_nomad-nodes"]
+  default = ["ddr_base_networking", "ddr_base_vault"]
 }
 
 variable "region" {
@@ -47,7 +46,7 @@ data "aws_iam_policy_document" "doormat_assume" {
     ]
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::397512762488:user/doormatServiceUser"] # infrasec_prod   
+      identifiers = ["arn:aws:iam::397512762488:user/doormatServiceUser"] # infrasec_prod
     }
   }
 }

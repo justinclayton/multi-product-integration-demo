@@ -1,3 +1,8 @@
+variable "tfc_workspace_names" {
+  type    = set(string)
+  default = ["ddr_base_networking", "ddr_base_vault"]
+}
+
 variable "tfc_organization" {
   type = string
 }

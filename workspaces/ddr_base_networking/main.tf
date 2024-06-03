@@ -1,37 +1,4 @@
-terraform {
-  required_providers {
-    doormat = {
-      source  = "doormat.hashicorp.services/hashicorp-security/doormat"
-      version = "~> 0.0.6"
-    }
-
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.8.0"
-    }
-
-    hcp = {
-      source  = "hashicorp/hcp"
-      version = "~> 0.66.0"
-    }
-  }
-}
-
-provider "doormat" {}
-
-data "doormat_aws_credentials" "creds" {
-  provider = doormat
-  role_arn = "arn:aws:iam::${var.aws_account_id}:role/tfc-doormat-role_1_networking"
-}
-
-provider "aws" {
-  region     = var.region
-  access_key = data.doormat_aws_credentials.creds.access_key
-  secret_key = data.doormat_aws_credentials.creds.secret_key
-  token      = data.doormat_aws_credentials.creds.token
-}
-
-provider "hcp" {}
+resource null_resource "networking" {}
 
 data "aws_availability_zones" "available" {
   filter {
@@ -47,13 +14,13 @@ module "vpc" {
   azs                  = data.aws_availability_zones.available.names
   cidr                 = var.vpc_cidr_block
   enable_dns_hostnames = true
-  name                 = "${var.stack_id}-vpc"
+  name                 = "${var.resource_prefix}-vpc"
   private_subnets      = var.vpc_private_subnets
   public_subnets       = var.vpc_public_subnets
 }
 
 resource "hcp_hvn" "main" {
-  hvn_id         = "${var.stack_id}-hvn"
+  hvn_id         = "${var.resource_prefix}-hvn"
   cloud_provider = "aws"
   region         = var.region
   cidr_block     = var.hvn_cidr_block
