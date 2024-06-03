@@ -4,7 +4,7 @@
 
 variable "tfc_workspace_names" {
   type    = set(string)
-  default = ["ddr_base_networking", "ddr_base_vault_cluster, ddr_base_vault_config"]
+  default = ["ddr_base_networking", "ddr_base_vault_cluster", "ddr_base_vault_config"]
 }
 
 # variable "region" {
