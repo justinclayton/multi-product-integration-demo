@@ -1,3 +1,7 @@
+variable "aws_account_id" {
+  type = string
+}
+
 variable "resource_prefix" {
   type        = string
   description = "A prefix for all resources in this workspace"

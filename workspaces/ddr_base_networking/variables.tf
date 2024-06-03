@@ -1,3 +1,11 @@
+## REQUIRED VARIABLES ##
+
+variable "aws_account_id" {
+  type = string
+}
+
+## OTHER VARIABLES
+
 variable "hvn_cloud" {
   type = string
   # description = "The cloud provider for the HCP HVN. Must be one of `aws`, `azure`, or `gcp`."
