@@ -1,13 +1,36 @@
-variable "tfc_workspace_names" {
-  type    = set(string) # technically a set, so we can use a for_each loop later
-  default = ["ddr_base_networking", "ddr_base_vault_cluster", "ddr_base_vault_config"] # <-- update this variable to include additional workspaces
+variable "enable_vault" {
+  type    = bool
+  default = false
+}
+
+variable "enable_boundary" {
+  type    = bool
+  default = false
+}
+
+variable "enable_packer" {
+  type    = bool
+  default = false
+}
+
+variable "enable_nomad" {
+  type    = bool
+  default = false
+}
+
+locals {
+  default_workspaces  = ["ddr_base_networking"]
+  vault_workspaces    = var.enable_vault ? ["ddr_base_vault_cluster", "ddr_base_vault_config"] : []
+  boundary_workspaces = var.enable_boundary ? ["ddr_base_boundary_cluster", "ddr_base_boundary_config"] : []
+  nomad_workspaces    = var.enable_boundary ? ["ddr_base_nomad_cluster", "ddr_base_nomad_nodes"] : []
+  included_workspaces = concat(local.default_workspaces, local.vault_workspaces, local.boundary_workspaces)
 }
 
 variable "tfc_organization" {
   type = string
 }
 
-variable "tfc_project_id" {
+variable "tfc_project_name" {
   type = string
 }
 

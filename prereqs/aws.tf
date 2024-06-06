@@ -1,8 +1,13 @@
+# if a workspace needs a doormat role, add the workspace name here
+locals {
+  tfc_workspaces_that_need_doormat_iam_roles = ["ddr_base_networking"]
+}
+
 resource "aws_iam_role" "doormat_role" {
-  for_each = var.tfc_workspace_names
+  for_each = toset(local.tfc_workspaces_that_need_doormat_iam_roles)
   name = "tfc-doormat-role_${each.key}"
   tags = {
-    hc-service-uri = "app.terraform.io/${var.varset_tf_vars["tfc_organization"]}/${each.key}"
+    hc-service-uri = "app.terraform.io/${var.tfc_organization}/${each.key}"
   }
   max_session_duration = 43200
   assume_role_policy   = data.aws_iam_policy_document.doormat_assume.json
