@@ -114,3 +114,18 @@ resource "tfe_variable" "vault_auth_method" {
   category        = "terraform"
   variable_set_id = tfe_variable_set.ddr_vault_auth.id
 }
+
+resource "tfe_variable" "ddr_vault_cluster_public_endpoint" {
+  key             = "ddr_vault_cluster_public_endpoint"
+  value           = data.terraform_remote_state.ddr_base_vault_cluster.outputs.vault_public_endpoint
+  category        = "terraform"
+  variable_set_id = tfe_variable_set.ddr_vault_auth.id
+}
+
+resource "tfe_variable" "ddr_vault_cluster_root_token" {
+  key             = "ddr_vault_cluster_root_token"
+  value           = data.terraform_remote_state.ddr_base_vault_cluster.outputs.vault_root_token
+  category        = "terraform"
+  sensitive = true
+  variable_set_id = tfe_variable_set.ddr_vault_auth.id
+}
