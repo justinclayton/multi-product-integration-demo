@@ -8,4 +8,7 @@ provider "vault" {
   namespace = "admin"
 }
 
-provider "tfe" {}
+provider "tfe" {
+  hostname     = "app.terraform.io"
+  organization = var.tfc_organization
+}

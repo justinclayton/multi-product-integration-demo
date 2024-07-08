@@ -14,11 +14,6 @@ resource "vault_policy" "admin" {
   policy = data.vault_policy_document.admin.hcl
 }
 
-data "tfe_project" "project" {
-  name         = var.tfc_project_name
-  organization = var.tfc_organization
-}
-
 resource "vault_jwt_auth_backend" "tfc" {
   path               = "tfc/${var.tfc_organization}"
   oidc_discovery_url = "https://app.terraform.io"
