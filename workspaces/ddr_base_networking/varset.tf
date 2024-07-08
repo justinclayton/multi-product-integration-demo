@@ -35,7 +35,7 @@ resource "tfe_variable" "ddr_subnet_ids" {
   category = "terraform"
 
   key = "ddr_subnet_ids"
-  value = module.vpc.public_subnets
+  value = join(",", module.vpc.public_subnets)
 }
 
 resource "tfe_variable" "ddr_subnet_cidrs" {
@@ -43,7 +43,7 @@ resource "tfe_variable" "ddr_subnet_cidrs" {
   category = "terraform"
 
   key = "ddr_subnet_cidrs"
-  value = module.vpc.public_subnets_cidr_blocks
+  value = join(",", module.vpc.public_subnets_cidr_blocks)
 }
 
 resource "tfe_variable" "ddr_hvn_sg_id" {
