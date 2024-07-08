@@ -1,3 +1,6 @@
+# our main tfvars file
+ddr.config
+
 ## Taken from https://github.com/github/gitignore/blob/main/Terraform.gitignore
 
 # Local .terraform directories

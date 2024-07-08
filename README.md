@@ -1,64 +1,38 @@
-# Multi Product Integration Demo
+
+# Demos Done Right (DDR) - Base Environment
 
 ## Overview
 
-This repository is intended to help members of WWTFO quickly create reproducible demo environments which showcase:
-- HCP Vault
-- HCP Consul
-- HCP Boundary
-- HCP Packer
-- Nomad Enterprise
-- Terraform (TFC)
+This repository contains the necessary Terraform code to deploy one or more HashiCorp products to enable field demos. The goal is to provide a consistent, repeatable, and easily deployable environment for HashiCorp Solution Engineers, Solutions Architects, and others to showcase the HashiCorp stack.
 
-More importantly, the resulting environment is pre-configured to highlight the "better together" story, with a focus on inter-product integrations. A demo could span the entire environment or focus on any individual aspect.  The aim was to provide a very flexible environment which can be used as the basis for all use case demos.
+Currently, the following products are supported:
 
-The following integrations are highlighted by default:
-- **Terraform** is leveraged to deploy, configure, and integrate the other products
-- **Vault** is used for dynamic credentials in several locations:
-  - Dynamic Provider credentials used by **Terraform**
-  - SSH signed Certificate injection in **Boundary**
-  - Dynamic MongoDB credentials injection via **Nomad** templates
-- **Packer** is used to create **Nomad** Server and Client AMIs in AWS
-- **Terraform** integrates with **HCP Packer** for AMI management
-- **Consul** service registration via **Nomad**
-- **Consul** Connect (service mesh) used by **Nomad** jobs
+- [x] HCP Vault
+- [ ] HCP Terraform
+- [ ] HCP Boundary
+- [ ] HCP Packer
+- [ ] HCP Consul
+- [ ] Nomad Enterprise
 
-## Repository Structure
+Once the base environment is deployed, you can use any of the applicable DDR demos (TODO: add link) to add the additional configuration necessary to showcase a given feature, use case, or user journey.
 
-The entire environment is orchestrated by the "control-workspace" directory.  After completing a few prerequesite manual operations (which we will discuss below in the "Prerequisites" section), you will plan/apply the "control-workspace" in TFC.  This workspace will orchestrate the creation and triggering of all downstream workspaces (Shout out to @lucymhdavies for the multi-space idea!).
-- **control-workspace**:  Orchestrates all other workspaces
-- **networking**: Creates a VPC in AWS with 3 subnets, an HVN in HCP, and the peering connection between the two
-- **hcp-clusters**: Creates an HCP Vault cluster, an HCP Boundary cluster, an HCP Consul cluster within the HVN
-- **vault-auth-config**: On the first run, will utilize the root token generated in **hcp-clusters** to bootstrap Vault JWT Auth for Terraform Cloud.  After the first run this JWT Auth will be leverage by TFC for all subsequent runs that require Vault access
-- **boundary-config**: Will configure the Boundary instance, configure the dynamic host catalogues, and integrate Vault for SSH signed cert injection
-- **nomad-cluster**: Provisions a 3 node Nomad server cluster as an AWS ASG, boostraps its ACLs, and stores the bootstrap token in Vault
-- **nomad-nodes**: Provisions 2 ASGs of 2 nodes each.  1 node pool for x86 nodes and 1 node pool for ARM nodes
+### Repository Structure
+
+The repository is structured into multiple Terraform workspaces. The main workspace is responsible for creating and orchestrating the deployment of other workspaces, which maintain distinct states. This allows for a stepped approach to deploying the environment, as well as the ability to deploy and manage each product independently by toggling various inputs.
 
 ## Prerequisites
 
-- You need a doormat created AWS sandbox account [Docs](https://docs.prod.secops.hashicorp.services/doormat/aws/create_individual_sandbox_account/)
-- You need a doormat enrolled TFC Account [Docs - Only Steps 1-5!](https://docs.prod.secops.hashicorp.services/doormat/tf_provider/#onboard-tfc-organization-to-doormat)
-- You need a HCP account with an organization scoped service principal [Docs](https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/service-principals#organization-level-service-principals-1)
-- You need a Packer Registry Initialized within your HCP Project [Docs](https://developer.hashicorp.com/hcp/docs/packer/manage-registry#view-and-change-registry-tier)
-- You need a TFC account and a TFC user token [Docs](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/users#tokens)
-- You need a pre-configured OAuth connection between TFC and GitHub [Docs](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github)
+Currently, you will need to bring your own accounts and credentials to get this environment up and running. Here's a list of what you will need:
+
+- A Doormat-created AWS sandbox account [Docs](https://docs.prod.secops.hashicorp.services/doormat/aws/create_individual_sandbox_account/)
+- A Doormat-enrolled HCP Terraform Account [Docs - Only Steps 1-5!](https://docs.prod.secops.hashicorp.services/doormat/tf_provider/#onboard-tfc-organization-to-doormat)
+- An HCP account with an organization-scoped service principal [Docs](https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/service-principals#organization-level-service-principals-1)
+- An HCP Terraform organization and user token [Docs](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/users#tokens)
+- A pre-configured OAuth connection between HCP Terraform and GitHub [Docs](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github).
   - Once created, note your OAuth Token ID.  This can be found by navigating in TFC to Org "Settings" --> "Version Control - Providers" --> "OAuth Token Id"
-
-### Preparing your HCP Packer Registry
-
-1) You must enable the HCP Packer registry before Packer can publish build metadata to it. Click the Create a registry button after clicking on the Packer link under "Services" in the left navigation. This only needs to be done once.
 
 ### Preparing your AWS account to leverage the doormat provider on TFC:
 
-1) navigate to the doormat-prereqs directory
-```
-cd doormat-prereqs/
-```
-2) paste your doormat generated AWS credentials, exporting them to your shell
-```
-export AWS_ACCESS_KEY_ID=************************
-export AWS_SECRET_ACCESS_KEY=************************
-export AWS_SESSION_TOKEN=************************
 ```
 3) Initialize terraform
 ```
@@ -143,35 +117,5 @@ Once the run is complete, you can access each tool by:
 vault kv get -mount=hashistack-admin/ nomad_bootstrap/SecretID
 ```
 
-## Deploy a workload to highlight the integrations
-
-To demonstrate the full stack and all the pre-configured integrations, we've created a "no-code" module.  The code for this module is located within the following repository [terraform-nomad-workload](https://github.com/djschnei21/terraform-nomad-workload)
-1) Fork the repository (temporarily necessary)
-2) Open your TFC Org's Registry and click "publish" then "module"
-3) Select your Github Connection
-4) Select your forked repository "terraform-nomad-workload"
-5) Select "Branch" based, then branch = "main" and version = "1.0.0"
-6) Select "Add Module to no-code provision allowlist"
-7) Publish
-8) [OPTIONAL] Once the module has been published, go to "Configure Settings" and click "Edit Versions and Variable Settings":
-- tfc_organization: your tfc org name
-- region: the region you deployed the HashiStack to
-- mongodb_image: "mongo:5" (you may also add others to show variability, but during your demo always use v5)
-- frontend_app_image: "huggingface/mongoku:1.3.0" (you may also add others to show variability, but during your demo always use v1.3.0)
-- Save changes
-9) To demo the workload, select "provision workspace", then enter the following variables for the workspace:
-- create_consul_intention: true
-- frontend_app_image: "huggingface/mongoku:1.3.0"
-- mongodb_image: "mongo:5"
-- region: the region you deployed the HashiStack to
-- resource_prefix: name your demo app> (I typically use something like "app001-dev")
-- tfc_organization: your tfc org name
-10) Click "Next: Workspace Settings"
-11) Provide the workspace settings:
-- Workspace name: Name the workspace (I typically use the resource_prefix I used above, "app001-dev")
-- Project: must be the same project the HashiStack was deployed to (e.g. "HashiStack")
-- Click "Create Workspace"
-![](https://github.com/djschnei21/multi-product-integration-demo/blob/main/plan.png?raw=true)
-
-### Video Walkthrough of workload deployment
-[Video Link](https://drive.google.com/file/d/1GckbTYTFcxwkvgboHW1jwbkmRvVUB9HA/view?usp=sharing)
+## Shoutouts
+Huge thanks to Daniel Schneider for his work on [djschnei21/multi-product-integration-demo](https://github.com/djschnei21/multi-product-integration-demo), which highly influenced our approach in building this.
