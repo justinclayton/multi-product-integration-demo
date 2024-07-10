@@ -31,23 +31,14 @@ Currently, you will need to bring your own accounts and credentials to get this 
 - A pre-configured OAuth connection between HCP Terraform and GitHub [Docs](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github).
   - Once created, note your OAuth Token ID.  This can be found by navigating in TFC to Org "Settings" --> "Version Control - Providers" --> "OAuth Token Id"
 
-### Preparing your AWS account to leverage the doormat provider on TFC:
+
+## Getting Started
 
 ```
-3) Initialize terraform
-```
-terraform init
-```
-4) Run a plan passing in your TFC account name and AWS region
-```
-terraform plan -var "tfc_organization=something" -var "region=aws_region"
-```
-5) Assuming everything looks good, run an apply passing in your TFC account name and AWS region
-```
-terraform apply -var "tfc_organization=something" -var "region=aws_region"
+make
 ```
 
-### Preparing your TFC account:
+<!-- ### Preparing your TFC account:
 
 1) Create a new Project (I called mine "hashistack")
 2) Create a new Variable Set (again, I called mine "hashistack") and scope it to your previously created Project
@@ -115,7 +106,7 @@ Once the run is complete, you can access each tool by:
 - **Nomad Ent**: The "5_nomad-cluster" workspace will have an output containing the public ALB endpoint to access the Nomad UI.  The Admin token for this can be retrieved from Vault using
 ```
 vault kv get -mount=hashistack-admin/ nomad_bootstrap/SecretID
-```
+``` -->
 
 ## Shoutouts
 Huge thanks to Daniel Schneider for his work on [djschnei21/multi-product-integration-demo](https://github.com/djschnei21/multi-product-integration-demo), which highly influenced our approach in building this.

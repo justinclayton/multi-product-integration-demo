@@ -18,12 +18,19 @@ variable "enable_nomad" {
   default = false
 }
 
+variable "enable_db" {
+  type    = bool
+  default = false
+}
+
 locals {
   default_workspaces  = ["ddr_base_networking"]
   vault_workspaces    = var.enable_vault ? ["ddr_base_vault_cluster", "ddr_base_vault_config"] : []
   boundary_workspaces = var.enable_boundary ? ["ddr_base_boundary_cluster", "ddr_base_boundary_config"] : []
   nomad_workspaces    = var.enable_boundary ? ["ddr_base_nomad_cluster", "ddr_base_nomad_nodes"] : []
-  included_workspaces = concat(local.default_workspaces, local.vault_workspaces, local.boundary_workspaces)
+
+  db_workspaces       = var.enable_db ? ["ddr_base_db_server"] : []
+  included_workspaces = concat(local.default_workspaces, local.vault_workspaces, local.boundary_workspaces, local.nomad_workspaces, local.db_workspaces)
 }
 
 variable "tfc_organization" {

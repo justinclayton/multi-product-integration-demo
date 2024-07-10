@@ -1,6 +1,6 @@
 # if a workspace needs a doormat role, add the workspace name here
 locals {
-  tfc_workspaces_that_need_doormat_iam_roles = ["ddr_base_networking"]
+  tfc_workspaces_that_need_doormat_iam_roles = ["ddr_base_networking", "ddr_base_db_server", "ddr_base_nomad_cluster", "ddr_base_nomad_nodes"]
 }
 
 resource "aws_iam_role" "doormat_role" {
