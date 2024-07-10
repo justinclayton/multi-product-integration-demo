@@ -41,7 +41,7 @@ resource "tfe_project_variable_set" "ddr_outputs" {
   project_id      = data.tfe_project.project.id
 }
 
-resource "tfc_variable" "ddr_tfc_organization" {
+resource "tfe_variable" "ddr_tfc_organization" {
   variable_set_id = tfe_variable_set.ddr_outputs.id
   category        = "terraform"
 
@@ -49,7 +49,7 @@ resource "tfc_variable" "ddr_tfc_organization" {
   value = var.tfc_organization
 }
 
-resource "tfc_variable" "ddr_tfc_project_name" {
+resource "tfe_variable" "ddr_tfc_project_name" {
   variable_set_id = tfe_variable_set.ddr_outputs.id
   category        = "terraform"
 
