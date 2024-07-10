@@ -31,7 +31,7 @@ module "ddr_outputs" {
   tfc_organization = var.tfc_organization
   tfc_project_name = var.tfc_project_name
 
-  inputs = {
+  outputs = {
     db_server_private_ip = aws_instance.database.private_ip
     db_server_public_ip  = aws_instance.database.public_ip
   }

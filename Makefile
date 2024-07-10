@@ -1,6 +1,6 @@
 tfvars_file = ddr.config
 
-default: doormat-login setup apply update-outputs status
+default: doormat-login setup apply
 
 check:
 	@ for i in workspaces/*; do echo CHECKING $$i; cd $$i && terraform init && terraform validate && cd - && echo $$i LOOKS GOOD; done
@@ -14,10 +14,10 @@ setup:
 apply:
 	@ terraform init && terraform apply -auto-approve
 
-update-outputs:
-	@ cd outputs && terraform init && terraform apply -auto-approve -var-file="../${tfvars_file}"
+# update-outputs:
+# 	@ cd outputs && terraform init && terraform apply -auto-approve -var-file="../${tfvars_file}"
 
-status:
-	@ cd outputs && terraform output -json
+# status:
+# 	@ cd outputs && terraform output -json
 
 .PHONY: default check doormat-login setup apply update-outputs status

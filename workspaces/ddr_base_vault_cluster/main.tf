@@ -1,4 +1,4 @@
-resource null_resource "vault_cluster" {}
+resource terraform_data "vault_cluster" {}
 
 resource "hcp_vault_cluster" "vault_cluster" {
   cluster_id      = "${var.resource_prefix}-vault-cluster"

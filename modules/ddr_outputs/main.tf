@@ -9,9 +9,9 @@ data "tfe_variable_set" "variable_set" {
 }
 
 resource "tfe_variable" "ddr_outputs" {
-  for_each        = var.inputs
+  for_each        = var.outputs
   variable_set_id = data.tfe_variable_set.variable_set.id
-  category        = "terraform"
+  category        = var.type
 
   key   = "ddr_${each.key}"
   value = each.value

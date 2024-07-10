@@ -31,11 +31,6 @@ variable "tfc_project_name" {
   type = string
 }
 
-variable "ddr_tfc_project_name" {
-  type    = string
-  default = null
-}
-
 # ## OTHER VARIABLES
 
 # variable "hvn_cloud" {

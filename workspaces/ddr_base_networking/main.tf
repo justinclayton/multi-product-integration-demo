@@ -1,4 +1,4 @@
-resource null_resource "networking" {}
+resource terraform_data "networking" {}
 
 data "aws_availability_zones" "available" {
   filter {

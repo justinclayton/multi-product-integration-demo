@@ -1,4 +1,4 @@
-resource "null_resource" "ddr_base_vault_config" {}
+resource "terraform_data" "ddr_base_vault_config" {}
 
 
 data "vault_policy_document" "admin" {

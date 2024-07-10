@@ -1,1 +1,1 @@
-resource "null_resource" "ddr_base_boundary_config" {}
+resource "terraform_data" "ddr_base_boundary_config" {}

@@ -1,1 +1,1 @@
-resource "null_resource" "ddr_base_nomad_nodes" {}
+resource "terraform_data" "ddr_base_nomad_nodes" {}

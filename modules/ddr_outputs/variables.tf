@@ -1,5 +1,16 @@
-variable "inputs" {
+variable "outputs" {
   type = map(any)
+}
+
+variable "type" {
+  type    = string
+  default = "terraform"
+
+  validation {
+    # condition     = contains(["terraform", "env"]), var.type)
+    condition     = can(regex("^(terraform|env)$", var.type))
+    error_message = "Allowed values for 'type' are 'terraform' or 'env'."
+  }
 }
 
 variable "tfc_organization" {
