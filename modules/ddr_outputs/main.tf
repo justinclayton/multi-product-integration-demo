@@ -13,7 +13,9 @@ resource "tfe_variable" "ddr_outputs" {
   variable_set_id = data.tfe_variable_set.variable_set.id
   category        = var.type
 
-  key   = "ddr_${each.key}"
+  ## only append "ddr_" to the key if the type is "terraform".
+  ## usually env vars need to be called something specific
+  key   = var.type == "terraform" ? "ddr_${each.key}" : each.key
   value = each.value
 }
 
