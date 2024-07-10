@@ -16,3 +16,11 @@ variable "region" {
 #   type = string
 #   description = "The name of the Terraform Cloud workspace running this code"
 # }
+
+variable "tfc_organization" {
+  type = string
+}
+
+variable "tfc_project_name" {
+  type = string
+}

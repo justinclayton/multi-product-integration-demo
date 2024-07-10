@@ -1,10 +1,3 @@
-# data "aws_availability_zones" "available" {
-#   filter {
-#     name   = "zone-type"
-#     values = ["availability-zone"]
-#   }
-# }
-
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"]  # Canonical owner ID for official Ubuntu AMIs
@@ -52,8 +45,8 @@ resource "aws_vpc_security_group_egress_rule" "database_egress_rule" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 
-resource "random_shuffle" "az" {
-  input        = data.aws_availability_zones.available.names
+resource "random_shuffle" "subnets" {
+  input        = local.ddr_subnet_ids
   result_count = 1
 }
 
@@ -61,7 +54,7 @@ resource "random_shuffle" "az" {
 resource "aws_instance" "database" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "m5.large"
-  subnet_id     = random_shuffle.az.result[0]
+  subnet_id     = random_shuffle.subnets.result[0]
   # key_name      = "my_key_pair"  # Replace with the name of your key pair
 
   vpc_security_group_ids = [aws_security_group.database.id]

@@ -19,9 +19,9 @@ variable "region" {
 # ### TODO: these come from a varset: they should probably
 # ### be renamed with a prefix to indicate this
 
-# variable "aws_account_id" {
-#   type = string
-# }
+variable "aws_account_id" {
+  type = string
+}
 
 variable "tfc_organization" {
   type = string
