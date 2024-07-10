@@ -25,3 +25,12 @@ output "db_server_private_ip" {
 output "db_server_public_ip" {
   value = aws_instance.database.public_ip
 }
+
+module "ddr_outputs" {
+  source = "github.com/justinclayton/multi-product-integration-demo//modules/ddr_outputs?ref=testing"
+
+  inputs = {
+    db_server_private_ip = aws_instance.database.private_ip
+    db_server_public_ip  = aws_instance.database.public_ip
+  }
+}
