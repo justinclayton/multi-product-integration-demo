@@ -9,8 +9,6 @@
 # #   project_id      = data.tfe_project.project.id
 # # }
 
-
-
 # ## Create variables within the variable set
 # resource "tfe_variable" "tfc_vault_provider_auth" {
 #   key             = "TFC_VAULT_PROVIDER_AUTH"
