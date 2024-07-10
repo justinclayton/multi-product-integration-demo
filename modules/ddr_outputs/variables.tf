@@ -1,5 +1,5 @@
 variable "inputs" {
-  type = set(any)
+  type = map(any)
 }
 
 variable "tfc_organization" {

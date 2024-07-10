@@ -8,12 +8,12 @@ data "tfe_variable_set" "variable_set" {
   organization = var.tfc_organization
 }
 
-resource "tfe_variable" "ddr_inputs" {
+resource "tfe_variable" "ddr_outputs" {
   for_each        = var.inputs
   variable_set_id = data.tfe_variable_set.variable_set.id
   category        = "terraform"
 
-  key   = each.key
+  key   = "ddr_${each.key}"
   value = each.value
 }
 

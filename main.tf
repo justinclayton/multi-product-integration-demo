@@ -1,3 +1,8 @@
+data "tfe_project" "project" {
+  name         = var.tfc_project_name
+  organization = var.tfc_organization
+}
+
 ### WORKSPACES ###
 
 resource "tfe_workspace" "workspaces" {
@@ -19,6 +24,37 @@ resource "tfe_workspace" "workspaces" {
   queue_all_runs      = false
   assessments_enabled = false
   global_remote_state = true
+}
+
+### DDR VARIABLE SET ###
+
+## if we do this once for a shared environment, this should be done once, set to global, and not be created per-project
+resource "tfe_variable_set" "ddr_outputs" {
+  name        = "ddr_outputs_${data.tfe_project.project.name}"
+  description = "DDR output values"
+  global      = false
+}
+
+# bind the variable set to the project
+resource "tfe_project_variable_set" "ddr_outputs" {
+  variable_set_id = tfe_variable_set.ddr_outputs.id
+  project_id      = data.tfe_project.project.id
+}
+
+resource "tfc_variable" "ddr_tfc_organization" {
+  variable_set_id = tfe_variable_set.ddr_outputs.id
+  category        = "terraform"
+
+  key   = "ddr_tfc_organization"
+  value = var.tfc_organization
+}
+
+resource "tfc_variable" "ddr_tfc_project_name" {
+  variable_set_id = tfe_variable_set.ddr_outputs.id
+  category        = "terraform"
+
+  key   = "ddr_tfc_project_name"
+  value = var.tfc_project_name
 }
 
 ### RUN ORDER ###

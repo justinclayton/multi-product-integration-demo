@@ -28,6 +28,8 @@ output "db_server_public_ip" {
 
 module "ddr_outputs" {
   source = "github.com/justinclayton/multi-product-integration-demo//modules/ddr_outputs?ref=testing"
+  tfc_organization = var.tfc_organization
+  tfc_project_name = var.tfc_project_name
 
   inputs = {
     db_server_private_ip = aws_instance.database.private_ip
