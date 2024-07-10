@@ -33,8 +33,8 @@ resource "aws_vpc_security_group_ingress_rule" "database_ingress_rule" {
   security_group_id = aws_security_group.database.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1"
-  from_port         = 0
-  to_port           = 0
+  # from_port         = 0
+  # to_port           = 0
   # from_port         = 5432
   # to_port           = 5432
 }
