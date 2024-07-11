@@ -66,3 +66,31 @@ resource "aws_instance" "database" {
     # probably more setup here...
   EOF
 }
+
+resource "aws_db_subnet_group" "db" {
+  name = "db_subnet_group"
+  subnet_ids = local.ddr_subnet_ids
+}
+
+resource "aws_rds_cluster" "db" {
+  cluster_identifier   = "aurora-cluster-demo"
+  availability_zones   = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  database_name        = "mydb"
+  master_username      = "foo"
+  master_password      = "barbut8chars"
+  engine               = "aurora-postgresql"
+  db_subnet_group_name = aws_rds_cluster.db.db_subnet_group_name
+  skip_final_snapshot  = true
+  vpc_security_group_ids = [ aws_security_group.database.id ]
+}
+
+
+resource "aws_rds_cluster_instance" "db" {
+  count              = 2
+  identifier         = "aurora-cluster-demo-${count.index}"
+  cluster_identifier = aws_rds_cluster.db.id
+  instance_class     = "db.r4.large"
+  engine             = aws_rds_cluster.db.engine
+  engine_version     = aws_rds_cluster.db.engine_version
+  db_subnet_group_name = aws_rds_cluster.db.db_subnet_group_name
+}
