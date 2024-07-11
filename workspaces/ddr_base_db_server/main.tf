@@ -72,6 +72,11 @@ resource "aws_db_subnet_group" "db" {
   subnet_ids = local.ddr_subnet_ids
 }
 
+locals {
+  rds_cluster_master_username = "foo"
+  rds_cluster_master_password = "barbut8chars"
+}
+
 resource "aws_rds_cluster" "db" {
   cluster_identifier   = "aurora-cluster-demo"
   availability_zones   = ["us-west-2a", "us-west-2b", "us-west-2c"]
