@@ -89,7 +89,7 @@ resource "aws_rds_cluster_instance" "db" {
   count              = 2
   identifier         = "aurora-cluster-demo-${count.index}"
   cluster_identifier = aws_rds_cluster.db.id
-  instance_class     = "db.r4.large"
+  instance_class     = "db.r5.large"
   engine             = aws_rds_cluster.db.engine
   engine_version     = aws_rds_cluster.db.engine_version
   db_subnet_group_name = aws_rds_cluster.db.db_subnet_group_name
