@@ -1,4 +1,4 @@
-tfvars_file = ddr.config
+tfvars_file = terraform.tfvars
 
 default: doormat-login setup apply
 
@@ -13,11 +13,5 @@ setup:
 
 apply:
 	@ terraform init && terraform apply -auto-approve
-
-# update-outputs:
-# 	@ cd outputs && terraform init && terraform apply -auto-approve -var-file="../${tfvars_file}"
-
-# status:
-# 	@ cd outputs && terraform output -json
 
 .PHONY: default check doormat-login setup apply update-outputs status

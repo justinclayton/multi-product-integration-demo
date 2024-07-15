@@ -1,34 +1,33 @@
 #!/bin/bash -e
 
-main() {
+tfvars_file="terraform.tfvars"
 
-	while check-terraform-variables
+main() {
 
 	check-terraform-variables
 	fix-missing-variables
 
-
-	while [[ $# -gt 0 ]]; do
-		case "$1" in
-			doormat)
-				pushd prereqs
-				doormat-login
-				popd
-				;;
-			foo)
-				;;
-			-d|--destroy)
-				terraform-destroy
-				;;
-			-c|--check-variables)
-				check-terraform-variables
-				;;
-			*)
-				echo "Invalid option: $1" >&2
-				;;
-		esac
-		shift
-	done
+	# while [[ $# -gt 0 ]]; do
+	# 	case "$1" in
+	# 		doormat)
+	# 			pushd prereqs
+	# 			doormat-login
+	# 			popd
+	# 			;;
+	# 		foo)
+	# 			;;
+	# 		-d|--destroy)
+	# 			terraform-destroy
+	# 			;;
+	# 		-c|--check-variables)
+	# 			check-terraform-variables
+	# 			;;
+	# 		*)
+	# 			echo "Invalid option: $1" >&2
+	# 			;;
+	# 	esac
+	# 	shift
+	# done
 }
 
 doormat-login() {
@@ -51,22 +50,20 @@ check-terraform-variables() {
 	local required_variables=(
 		"oauth_token_id"
 		"repo_identifier"
-		"repo_branch"
 		"aws_account_id"
 		"my_email"
 		"region"
 		"resource_prefix"
 		"tfc_project_name"
 		"tfc_organization"
-		"HCP_CLIENT_ID"
-		"HCP_CLIENT_SECRET"
-		"HCP_PROJECT_ID"
-		"TFE_ORGANIZATION"
-		"TFE_TOKEN"
+		"tfc_token"
+		"hcp_client_id"
+		"hcp_client_secret"
+		"hcp_project_id"
 	)
 
 	for variable in "${required_variables[@]}"; do
-		if ! grep -q "^$variable" prereqs/terraform.tfvars; then
+		if ! grep -q "^$variable" ${tfvars_file}; then
 			missing_variables+=("$variable")
 		else
 			echo "Found variable: $variable"

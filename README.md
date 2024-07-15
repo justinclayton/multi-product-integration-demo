@@ -11,7 +11,7 @@ Currently, the following products are supported:
 - [ ] HCP Terraform
 - [ ] HCP Boundary
 - [ ] HCP Packer
-- [ ] HCP Consul
+- [ ] Consul Enterprise
 - [ ] Nomad Enterprise
 
 Once the base environment is deployed, you can use any of the applicable DDR demos (TODO: add link) to add the additional configuration necessary to showcase a given feature, use case, or user journey.
@@ -22,7 +22,9 @@ The repository is structured into multiple Terraform workspaces. The main worksp
 
 ## Prerequisites
 
-Currently, you will need to bring your own accounts and credentials to get this environment up and running. Here's a list of what you will need:
+Currently, you will need to bring your own accounts and credentials to get this environment up and running. These values need to be stored in a file called `ddr.config`.
+
+1.
 
 - A Doormat-created AWS sandbox account [Docs](https://docs.prod.secops.hashicorp.services/doormat/aws/create_individual_sandbox_account/)
 - A Doormat-enrolled HCP Terraform Account [Docs - Only Steps 1-5!](https://docs.prod.secops.hashicorp.services/doormat/tf_provider/#onboard-tfc-organization-to-doormat)

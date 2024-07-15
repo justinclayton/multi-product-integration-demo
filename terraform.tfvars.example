@@ -1,0 +1,33 @@
+## This is a tfvars file. Copy this file to `ddr.config` and fill in the values.
+
+my_email         = "<your_hashicorp_email_address"
+
+tfc_organization = "wwtfo-demo-platform-dev"
+tfc_project_name = "<your_username_but_with_dashes_instead_of_dots>" # examples: thomas, justin-clayton
+
+## Create a TFC User Token
+## https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/users#tokens)
+tfc_token = "<generate_a_token_in_tfc_and_put_here>"
+
+## Use your doormat AWS account ID here
+aws_account_id   = "<your_aws_account_id>"
+region           = "us-west-2"
+
+## `oauth_token_id` is needed so GitHub and Terraform Cloud can communicate:
+##
+## Follow these instructions to create a GitHub OAuth Token:
+## https://developer.hashicorp.com/terraform/cloud-docs/vcs/github
+##
+## Once created, find your OAuth Token ID by navigating in
+## TFC to Org "Settings" --> "Version Control - Providers" --> "OAuth Token Id"
+oauth_token_id   = "ot-XXXXXXXXXXXXXX"
+
+## In your HCP accoumt, create an organization-scoped service principal:
+## https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/service-principals#organization-level-service-principals-1
+##
+## Once created, add the client ID and secret from the service principal
+hcp_client_id                  = "iG..."
+hcp_client_secret              = "27QqQ-..."
+
+## Use a dedicated HCP project for this
+hcp_project_id                 = "a7d0205d-..."

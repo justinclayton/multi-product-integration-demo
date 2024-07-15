@@ -1,26 +1,26 @@
 variable "enable_vault" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "enable_boundary" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "enable_packer" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "enable_nomad" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "enable_db" {
   type    = bool
-  default = false
+  default = true
 }
 
 locals {
@@ -42,11 +42,13 @@ variable "tfc_project_name" {
 }
 
 variable "repo_identifier" {
-  type = string
+  type    = string
+  default = "hashicorp/ddr-base"
 }
 
 variable "repo_branch" {
-  type = string
+  type        = string
+  description = "main"
 }
 
 variable "oauth_token_id" {

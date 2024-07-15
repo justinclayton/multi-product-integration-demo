@@ -1,51 +1,59 @@
-variable "oauth_token_id" {
-  type = string
-}
-variable "repo_identifier" {
-  type = string
-}
-variable "repo_branch" {
-  type = string
-  default = "main"
-}
-variable "aws_account_id" {
-  type = string
-}
 variable "my_email" {
   type = string
 }
+
+variable "oauth_token_id" {
+  type = string
+}
+
+variable "aws_account_id" {
+  type = string
+}
+
 variable "region" {
   type = string
-  default = "us-west-2"
 }
-variable "resource_prefix" {
-  type = string
-  default = "ddr"
-}
-variable "tfc_project_name" {
-  type = string
-}
+
 variable "tfc_organization" {
   type = string
 }
 
-#### env vars
-variable "HCP_CLIENT_ID" {
+variable "tfc_project_name" {
+  type = string
+}
+
+variable "hcp_client_id" {
+  type = string
+}
+
+variable "hcp_client_secret" {
+  type = string
+}
+
+variable "hcp_project_id" {
 type = string
 }
-variable "HCP_CLIENT_SECRET" {
-type = string
+
+variable "tfe_token" {
+  type = string
 }
-variable "HCP_PROJECT_ID" {
-type = string
+
+variable "tfc_workload_identity_audience" {
+  type    = string
+  default = "ddr"
 }
-variable "TFE_ORGANIZATION" {
-type = string
+
+variable "resource_prefix" {
+  type    = string
+  default = "ddr"
 }
-variable "TFC_WORKLOAD_IDENTITY_AUDIENCE" {
-type = string
-default = "ddr"
+
+variable "repo_identifier" {
+  type    = string
+  default = "hashicorp/ddr-base"
 }
-variable "TFE_TOKEN" {
-type = string
+
+variable "repo_branch" {
+  type    = string
+  default = "main"
 }

@@ -12,7 +12,7 @@ output "vault_cluster_id" {
 }
 
 module "ddr_outputs" {
-  source           = "github.com/justinclayton/multi-product-integration-demo//modules/ddr_outputs?ref=testing"
+  source           = "github.com/hashicorp/ddr-base//modules/ddr_outputs?ref=main"
   tfc_organization = var.tfc_organization
   tfc_project_name = var.tfc_project_name
 
