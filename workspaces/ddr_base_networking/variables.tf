@@ -1,20 +1,5 @@
 ## REQUIRED VARIABLES ##
 
-### TODO: these come from a varset: they should probably
-### be renamed with a prefix to indicate this
-
-variable "aws_account_id" {
-  type = string
-}
-
-variable "tfc_organization" {
-  type = string
-}
-
-variable "tfc_project_name" {
-  type = string
-}
-
 ## OTHER VARIABLES
 
 variable "hvn_cloud" {
