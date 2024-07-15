@@ -22,17 +22,17 @@ The repository is structured into multiple Terraform workspaces. The main worksp
 
 ## Prerequisites
 
-Currently, you will need to bring your own accounts and credentials to get this environment up and running. These values need to be stored in a file called `ddr.config`.
+Currently, you will need to bring your own accounts and credentials to get this environment up and running. Specifically, you will need:
 
-1.
 
 - A Doormat-created AWS sandbox account [Docs](https://docs.prod.secops.hashicorp.services/doormat/aws/create_individual_sandbox_account/)
 - A Doormat-enrolled HCP Terraform Account [Docs - Only Steps 1-5!](https://docs.prod.secops.hashicorp.services/doormat/tf_provider/#onboard-tfc-organization-to-doormat)
 - An HCP account with an organization-scoped service principal [Docs](https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/service-principals#organization-level-service-principals-1)
 - An HCP Terraform organization and user token [Docs](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/users#tokens)
 - A pre-configured OAuth connection between HCP Terraform and GitHub [Docs](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github).
-  - Once created, note your OAuth Token ID.  This can be found by navigating in TFC to Org "Settings" --> "Version Control - Providers" --> "OAuth Token Id"
 
+1. Create a `terraform.tfvars` file in the `prereqs` directory. An example file is provided in `prereqs/terraform.tfvars.example`.
+2. Retrieve the relevant values and populate the `terraform.tfvars` file according to the instructions in the example file.
 
 ## Getting Started
 

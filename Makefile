@@ -1,5 +1,3 @@
-tfvars_file = terraform.tfvars
-
 default: doormat-login setup apply
 
 check:
@@ -9,7 +7,7 @@ doormat-login:
 	@ doormat login -f && doormat aws cred-file add-profile --set-default --role $$(echo $$(doormat aws list) | awk '{ print $$3 }') && aws sts get-caller-identity | jq
 
 setup:
-	@ cd prereqs && terraform init && terraform apply -auto-approve -var-file="../${tfvars_file}"
+	@ cd prereqs && terraform init && terraform apply -auto-approve
 
 apply:
 	@ terraform init && terraform apply -auto-approve

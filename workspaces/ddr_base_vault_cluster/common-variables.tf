@@ -3,11 +3,11 @@ variable "aws_account_id" {
 }
 
 variable "resource_prefix" {
-  type        = string
+  type = string
 }
 
 variable "region" {
-  type        = string
+  type = string
 }
 
 variable "tfc_organization" {
