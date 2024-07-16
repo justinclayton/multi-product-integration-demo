@@ -24,6 +24,8 @@ resource "tfe_workspace" "workspaces" {
   queue_all_runs      = false
   assessments_enabled = false
   global_remote_state = true
+
+  depends_on = [ tfe_variable_set.ddr_outputs, tfe_variable.ddr_tfc_project_name, tfe_variable.ddr_tfc_organization ]
 }
 
 ### DDR VARIABLE SET ###
